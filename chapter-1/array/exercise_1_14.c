@@ -1,31 +1,43 @@
 #include <stdio.h>
 
+#define ARRAY_SIZE 26
+
+void histogram_characters(void);
+
 
 int main() {
-	/*	Write a program to print a histogram of the frequencies of different characters
-		in its input.
-	*/
+    histogram_characters();
 
-	int character;
-	int letters_number[26];	// store frequesncies of each letter
+    return 0;
+}
 
-	for(int i = 0; i < 26; ++i) letters_number[i] = 0;	// initialize all indexes to 0
-	while( (character = getchar()) != EOF) {
-		/*	check if the character is valid(for both uppercase and lowercase), then
-			convert character to index and increment letters_number
-		*/
-		if(character >= 'a' && character <= 'y') ++letters_number[character - 'a'];
-		if(character >= 'A' && character <= 'Y') ++letters_number[character - 'A'];
-	}
 
-	for(int i = 0; i < 26; ++i) {
-		if(letters_number[i] > 0) {	// only letters that appeared in the input
-			printf("[%c]: ", 'a' + i);	// convert index to character
-			for(int j = 0; j < letters_number[i]; ++j) printf("*");
-			printf("\n");
-		}
-	}
-	printf("\n");
+void histogram_characters(void) {
+    int character;
+    int letters[ARRAY_SIZE];
 
-	return 0;
+    // Fill the `letters` array
+    for (int item = 0; item < ARRAY_SIZE; ++item) letters[item] = 0;
+
+    while ((character = getchar()) != EOF)
+    {
+        // Check if the current character is alpha,
+        // increment the place of the current character in the array (alphabet).
+        if (character >= 'a' && character <= 'z') ++letters[character - 'a'];
+        if (character >= 'A' && character <= 'Z') ++letters[character - 'A'];
+    }
+
+    for (int item = 0; item < ARRAY_SIZE; ++item)
+    {
+        // Only letters that appeared in the input
+        if (letters[item] > 0) {
+            // Convert the current letter to its place in alphabet
+            if (letters[item] >= 'a' || letters[item] <= 'z') printf("[%c], ", item + 'a');
+            if (letters[item] >= 'A' || letters[item] <= 'Z') printf("[%c]: ", item + 'A');
+
+            // Print how many times the current letter appeared
+            printf("%d", letters[item]);
+            printf("\n");
+        }
+    }
 }
